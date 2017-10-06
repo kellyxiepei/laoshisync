@@ -49,7 +49,7 @@ def crawl_momentum(self):
                                                           b['source'].replace(
                                                               '/', '-'))
         full_file_name = os.path.join(unicode(WORKING_DIR),
-                                      u'laoshisync_inbox',
+                                      u'laoshi_sync_inbox',
                                       file_name)
         if os.path.isfile(full_file_name):
             logger.info(file_name + u' already exsits.')
@@ -79,7 +79,7 @@ def crawl_momentum_quote(self):
         file_name = u'{} - momentum_quote.txt'.format(date)
 
         full_file_name = os.path.join(unicode(WORKING_DIR),
-                                      u'laoshisync_inbox',
+                                      u'laoshi_sync_inbox',
                                       file_name)
         if os.path.isfile(full_file_name):
             logger.info(file_name + u' already exsits.')
