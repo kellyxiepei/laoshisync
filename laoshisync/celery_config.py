@@ -32,6 +32,10 @@ CELERYBEAT_SCHEDULE = {
         'task': 'laoshisync.crawl_momentum_quote',
         'schedule': crontab(minute=0)
     },
+    'crawl_bing_wallpaper': {
+        'task': 'laoshisync.crawl_bing_wallpaper',
+        'schedule': crontab(minute=0)
+    },
 }
 
 WORKING_DIR = os.path.dirname(__file__)

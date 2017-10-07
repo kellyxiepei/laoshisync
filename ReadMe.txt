@@ -14,3 +14,6 @@ sudo pip install requests
 
 nohup celery -A celery_app.celery worker  --loglevel=debug > celery_worker.log &
 nohup celery -A celery_app.celery beat  --loglevel=debug > celery_beat.log &
+
+import celery_app
+celery_app.celery.signature('laoshisync.crawl_bing_wallpaper').apply_async()
