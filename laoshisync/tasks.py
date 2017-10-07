@@ -139,33 +139,22 @@ def crawl_bing_wallpaper(self):
         try:
             logger.info(u'Downloading "{}"'.format(file_name))
             with requests.session() as sess:
-                sess.get('https://www.bing.com/?'
-                         'FORM=&setmkt=en-us&setlang=en-us')
                 r1 = sess.get(
                     'https://www.bing.com/HPImageArchive.aspx?'
                     'format=js&idx={}&n=1&nc={}&pid=hp&intlF=&'
-                    'quiz=1&fav=1'.format(i, time.time()))
-
-                sess.get('https://www.bing.com/?'
-                         'FORM=&setmkt=zh-cn&setlang=zh-cn')
-
-                r2 = sess.get(
-                    'https://www.bing.com/HPImageArchive.aspx?'
-                    'format=js&idx={}&n=1&nc={}&pid=hp&intlF=&'
-                    'quiz=1&fav=1'.format(i, time.time()))
-
-                if r1.status_code == 200 and r2.status_code == 200:
+                    'quiz=1&fav=1'.format(i, time.time()), headers=dict(
+                        Cookie='_EDGE_S=mkt=en-us&ui=en-us&SID=0081B4E5CFBE60403A67BFEACEAD61D6;'))
+                if r1.status_code == 200:
                     r1_json = r1.json()
-                    r2_json = r2.json()
-                    with open(full_file_name, 'w') as f:
-                        f.write(u'{}\r\n{}\r\n'.format(
-                            r1_json['images'][0]['copyright'],
-                            r2_json['images'][0]['copyright']).encode('utf-8'))
                 else:
                     raise IOError(
-                        'Http return not 200,{},{},{}'.format(r1.status_code,
-                                                              r2.status_code,
-                                                              file_name))
+                        'Http return not 200,{},{}'.format(r1.status_code,
+                                                           file_name))
+
+                with open(full_file_name, 'w') as f:
+                    f.write(u'{}\r\n'.format(
+                        r1_json['images'][0]['copyright']).encode('utf-8'))
+
                 image_file_name = u'{} - bing_wallpaper.jpg'.format(date)
                 full_image_file_name = os.path.join(unicode(WORKING_DIR),
                                                     u'laoshi_sync_inbox',
